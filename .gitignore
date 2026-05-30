@@ -1,0 +1,40 @@
+# See https://github.com/github/gitignore/blob/main/Global/VisualStudio.gitignore
+## Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASTRO フォルダ以外はコミットしない
+# tool フォルダ（ローカル用スクリプト）
+tool/
+
+# 一時的なファイル・キャッシュ
+*.tmp
+*.temp
+*.cache
+
+# IDE 設定
+.vscode/
+.idea/
+
+# OS ファイル
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 環境変数
+.env
+.env.local
+.env.*.local
+
+# ログ
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# node_modules (ルートに万が一存在した場合)
+node_modules/
