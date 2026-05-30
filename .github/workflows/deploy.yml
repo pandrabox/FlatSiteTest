@@ -26,6 +26,7 @@ jobs:
         uses: withastro/action@v3
         with:
           path: "./astro" # ← ここで「Astroはサブフォルダにあるよ」と教えています
+          node-version: 22 # Astro v6 用 Node.js 22 以上が必要
 
   deploy:
     needs: build
