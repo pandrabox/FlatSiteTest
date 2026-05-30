@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ] # mainブランチにpushされたら動く
+    branches: [ "master" ] # masterブランチにpushされたら動く
   workflow_dispatch: # 手動実行もできるようにする
 
 permissions:
