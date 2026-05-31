@@ -246,8 +246,46 @@ const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentI
             <span class="pg-btn-title">衣装＆アイテムカタログを見る</span>
           </a>
         )}
-      </nav>
     </div>
+
+    <script>
+      function formatCallouts() {
+        const blockquotes = document.querySelectorAll('.prose blockquote');
+        blockquotes.forEach((bq) => {
+          if (bq.classList.contains('callout')) return;
+
+          const paragraphs = bq.querySelectorAll('p');
+          if (paragraphs.length === 0) return;
+          
+          const p = paragraphs[0];
+          const text = p.innerHTML.trim();
+          const match = text.match(/^\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION)\]/i);
+          
+          if (match) {
+            const type = match[1].toUpperCase();
+            bq.classList.add('callout', `callout-${type.toLowerCase()}`);
+            
+            p.innerHTML = p.innerHTML.replace(/^\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION)\]\s*(<br\s*\/?>)?/i, '').trim();
+            
+            const header = document.createElement('div');
+            header.className = 'callout-header';
+            
+            let icon = '💡';
+            let label = 'NOTE';
+            if (type === 'TIP') { icon = '✨'; label = 'TIP'; }
+            else if (type === 'WARNING') { icon = '⚠️'; label = 'WARNING'; }
+            else if (type === 'IMPORTANT') { icon = '🚨'; label = 'IMPORTANT'; }
+            else if (type === 'CAUTION') { icon = '🔥'; label = 'CAUTION'; }
+            
+            header.innerHTML = `<span class="callout-icon">${icon}</span><span class="callout-label">${label}</span>`;
+            bq.insertBefore(header, bq.firstChild);
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', formatCallouts);
+      formatCallouts();
+    </script>
 
     <Footer />
   </body>

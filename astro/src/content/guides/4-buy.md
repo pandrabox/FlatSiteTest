@@ -61,4 +61,4 @@ BOOTHでは様々な支払い方法が利用可能です。ご自身に合った
 
 アバターの購入、おめでとうございます！🎉
 次のステップでは、購入したフラットくんをいよいよVRChatにアップロードして、ゲーム内で使えるようにする具体的な操作を説明します。
-[次のステップへ：アバターをアップロードする](file:///C:/Users/raichu/.gemini/antigravity/brain/f209652d-3703-4ccb-9e90-b4a2c20a4d1a/src/pages/guide/upload.astro)
+[次のステップへ：アバターをアップロードする](/FlatSiteTest/guide/5-upload/)

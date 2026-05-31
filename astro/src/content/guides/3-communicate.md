@@ -49,4 +49,4 @@ VRChatは「人とのつながり」を楽しむメタバース空間です。
 ---
 
 温かいコミュニティの雰囲気を味わったら、次はいよいよ「自分自身のフラットくん」を手に入れる方法を学びましょう！
-[次のステップへ：フラットくんを購入する](file:///C:/Users/raichu/.gemini/antigravity/brain/f209652d-3703-4ccb-9e90-b4a2c20a4d1a/src/pages/guide/buy.astro)
+[次のステップへ：フラットくんを購入する](/FlatSiteTest/guide/4-buy/)

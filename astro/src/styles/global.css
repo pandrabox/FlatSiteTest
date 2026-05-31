@@ -220,12 +220,77 @@ main {
 }
 
 .prose blockquote {
-  border-left: 6px solid var(--color-brand);
-  padding: 1rem 1.5rem;
-  background-color: var(--color-bg-secondary);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-style: italic;
+  border-radius: var(--radius-md);
   margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, rgba(244, 173, 57, 0.02) 100%);
+  font-style: normal; /* 斜体は日本語フォントだとジャギーが目立つため無効化 */
+  box-shadow: var(--shadow-glass);
+  border: 1px solid rgba(244, 173, 57, 0.08);
+  border-left: 6px solid var(--color-brand);
+  position: relative;
+  overflow: hidden;
+}
+
+.prose blockquote.callout {
+  border-left-width: 5px;
+}
+
+.prose blockquote.callout-note {
+  border-left-color: var(--color-brand);
+  background: linear-gradient(135deg, hsl(38, 30%, 96%) 0%, hsl(38, 50%, 98%) 100%);
+  border-color: rgba(244, 173, 57, 0.12);
+}
+
+.prose blockquote.callout-tip {
+  border-left-color: hsl(142, 70%, 45%);
+  background: linear-gradient(135deg, hsl(142, 30%, 96%) 0%, hsl(142, 50%, 98%) 100%);
+  border-color: rgba(16, 185, 129, 0.12);
+}
+
+.prose blockquote.callout-warning {
+  border-left-color: var(--color-accent);
+  background: linear-gradient(135deg, hsl(6, 30%, 96%) 0%, hsl(6, 50%, 98%) 100%);
+  border-color: rgba(231, 76, 60, 0.12);
+}
+
+.prose blockquote.callout-important {
+  border-left-color: hsl(262, 80%, 60%);
+  background: linear-gradient(135deg, hsl(262, 30%, 96%) 0%, hsl(262, 50%, 98%) 100%);
+  border-color: rgba(139, 92, 246, 0.12);
+}
+
+.prose blockquote.callout-caution {
+  border-left-color: hsl(35, 90%, 50%);
+  background: linear-gradient(135deg, hsl(35, 30%, 96%) 0%, hsl(35, 50%, 98%) 100%);
+  border-color: rgba(245, 158, 11, 0.12);
+}
+
+.callout-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  font-family: 'Fredoka', 'Murecho', sans-serif;
+}
+
+.callout-note .callout-header { color: var(--color-brand-dark); }
+.callout-tip .callout-header { color: hsl(142, 70%, 35%); }
+.callout-warning .callout-header { color: var(--color-accent-dark); }
+.callout-important .callout-header { color: hsl(262, 80%, 50%); }
+.callout-caution .callout-header { color: hsl(35, 90%, 40%); }
+
+.callout-icon {
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.callout-label {
+  text-transform: uppercase;
 }
 
 .prose code {
@@ -258,6 +323,12 @@ main {
   width: 100%;
 }
 
+.prose img.transparent-img {
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 0;
+}
+
 .prose table {
   width: 100%;
   border-collapse: collapse;
@@ -275,6 +346,196 @@ main {
   font-weight: 700;
 }
 
+/* 4-Step Diagnosis Stepper Design */
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 3rem 0;
+}
+
+.step-card {
+  background: var(--color-bg-glass);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-glass);
+  transition: var(--transition-smooth);
+}
+
+.step-card:hover {
+  border-color: var(--color-brand);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px dashed rgba(244, 173, 57, 0.15);
+  padding-bottom: 0.75rem;
+}
+
+.step-badge {
+  font-family: 'Fredoka', sans-serif;
+  background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-dark) 100%);
+  color: var(--color-text-white);
+  font-weight: 900;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.step-title {
+  margin: 0 !important;
+  font-size: 1.15rem !important;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.step-option {
+  background: rgba(253, 251, 247, 0.5);
+  border: 1px solid rgba(244, 173, 57, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  transition: var(--transition-fast);
+}
+
+.step-option:hover {
+  background: rgba(253, 251, 247, 0.9);
+  border-color: rgba(244, 173, 57, 0.2);
+}
+
+.option-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.option-icon {
+  font-size: 1.1rem;
+}
+
+.option-badge {
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.option-badge.yes {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: hsl(142, 70%, 35%);
+}
+
+.option-badge.no {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--color-accent-dark);
+}
+
+.option-badge.decision {
+  background-color: rgba(244, 173, 57, 0.12);
+  color: var(--color-brand-dark);
+}
+
+.option-badge.normal {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+}
+
+.option-text {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  margin: 0 !important;
+  line-height: 1.6;
+}
+
+.option-text strong {
+  color: var(--color-accent);
+}
+
+.option-decision-box {
+  background: rgba(244, 173, 57, 0.04);
+  border-left: 4px solid var(--color-brand);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.decision-title {
+  font-weight: 800;
+  color: var(--color-brand-dark);
+  font-size: 1rem;
+  margin-bottom: 0.25rem !important;
+}
+
+.option-text.desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.decision-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0.5rem 0 0 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.decision-list li {
+  font-size: 0.9rem;
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--color-text);
+}
+
+.decision-list li::before {
+  content: "•";
+  color: var(--color-brand);
+  font-weight: bold;
+  position: absolute;
+  left: 0.25rem;
+  top: 0;
+}
+
+/* Stepper connectors */
+.step-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.connector-line {
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(to bottom, var(--color-brand) 50%, transparent 50%);
+  background-size: 2px 8px;
+}
+
+.connector-arrow {
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-top: -2px;
+  animation: bounceMini 2s infinite;
+}
+
+@keyframes bounceMini {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
 /* SEO screen-reader helper */
 .sr-only {
   position: absolute;
@@ -286,3 +547,4 @@ main {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
