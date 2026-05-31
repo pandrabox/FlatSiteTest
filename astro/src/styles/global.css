@@ -196,6 +196,31 @@ main {
   margin-bottom: 1.25rem;
 }
 
+.prose h4 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.prose ul {
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose hr {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  border: none;
+  border-top: 2px solid var(--color-border);
+}
+
 .prose p {
   margin-bottom: 1.5rem;
   color: var(--color-text);
@@ -318,15 +343,15 @@ main {
 
 .prose img {
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-medium);
   margin: 2rem 0;
   width: 100%;
+  background: transparent;
 }
 
 .prose img.transparent-img {
   box-shadow: none !important;
   background: transparent !important;
-  border-radius: 0;
+  border-radius: 0 !important;
 }
 
 .prose table {
