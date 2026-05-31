@@ -5,7 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
-const currentBase = import.meta.env.BASE_URL;
+const currentBase = import.meta.env.BASE_URL + '/';
 
 const clothImages = [
   "FCamera_20260531_131016.webp",
@@ -708,7 +708,7 @@ const clonesEnd = clothImages.slice(0, 3); // 最初の3枚
           <img src={`${currentBase}images/Meetup.webp`} alt="100人以上のフラットくんが集結した大迫力の定例集会写真" />
         </div>
         <div class="community-card">
-          <h3>あたたかいコミュニティ 💛</h3>
+          <h3>あたたかいコミュニティ</h3>
           <p>フラットくんの仲間たちは非常にフレンドリー！年に1度開催される定例集会には100名以上のオーナーが大集合し、自慢の衣装や改変を持ち寄ってお祝いします。</p>
           <a href={`${currentBase}community/`} class="btn btn-primary">コミュニティの詳細を見る</a>
         </div>
