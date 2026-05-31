@@ -1,7 +1,7 @@
 ---
 title: "フラット If Ver"
 price: 3980
-boothUrl: "https://booth.pm/ja/items/4567890"
+boothUrl: "https://booth.pm/items/7537714"
 imageUrl: "FlatIF.webp"
 category: "avatar"
 recommendRank: 4

@@ -1,7 +1,7 @@
 ---
 title: "フラット (無印)"
 price: 3000
-boothUrl: "https://booth.pm/ja/items/2251345"
+boothUrl: "https://booth.pm/ja/items/3562180"
 imageUrl: "FlatNormal.webp"
 category: "avatar"
 recommendRank: 4

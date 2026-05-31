@@ -36,9 +36,9 @@ BOOTHでは様々な支払い方法が利用可能です。ご自身に合った
 
 アバター作者「らすちん」様が運営する公式ストア **「らすちんワークス」** の対象商品ページを開きます。
 
-*   [フラット（無印）商品ページ 🛒](https://booth.pm/ja/items/2251345)
-*   [フラット 2nd Anniversary 商品ページ 🛒](https://booth.pm/ja/items/4043697)
-*   [フラット 4th Anniversary 商品ページ 🛒](https://booth.pm/ja/items/5965415)
+*   [フラット（無印）商品ページ 🛒](https://booth.pm/ja/items/3562180)
+*   [フラット 2nd Anniversary 商品ページ 🛒](https://booth.pm/ja/items/5780006)
+*   [フラット 4th Anniversary 商品ページ 🛒](https://aoikurasu.booth.pm/items/7922210)
 
 > [!WARNING]
 > **購入時の注意点**

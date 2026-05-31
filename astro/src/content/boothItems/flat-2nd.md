@@ -1,7 +1,7 @@
 ---
 title: "フラット 2nd Anniversary"
 price: 3980
-boothUrl: "https://booth.pm/ja/items/4043697"
+boothUrl: "https://booth.pm/ja/items/5780006"
 imageUrl: "Flat2nd.webp"
 category: "avatar"
 recommendRank: 4
