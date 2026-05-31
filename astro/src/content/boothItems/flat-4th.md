@@ -1,7 +1,7 @@
 ---
 title: "フラット 4th Anniversary"
 price: 3980
-boothUrl: "https://aoikurasu.booth.pm/items/7922210"
+boothUrl: "https://booth.pm/ja/items/7922210"
 imageUrl: "Flat4th.webp"
 category: "avatar"
 recommendRank: 5
