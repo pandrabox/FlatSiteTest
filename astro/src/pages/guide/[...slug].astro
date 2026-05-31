@@ -1,0 +1,254 @@
+---
+// src/pages/guide/[...slug].astro
+import { getCollection, render } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({
+    params: { slug: guide.id },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+
+const currentBase = import.meta.env.BASE_URL;
+
+// Load all guides to compute next/prev navigation
+const allGuides = await getCollection('guides');
+const sortedGuides = allGuides.sort((a, b) => a.data.stepNumber - b.data.stepNumber);
+const currentIndex = sortedGuides.findIndex((g) => g.id === guide.id);
+const prevGuide = currentIndex > 0 ? sortedGuides[currentIndex - 1] : null;
+const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentIndex + 1] : null;
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <BaseHead 
+      title={`${guide.data.seoTitle} | フラットファンクラブ`} 
+      description={guide.data.description} 
+    />
+    <style>
+      .guide-layout {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+      }
+
+      /* Breadcrumbs */
+      .breadcrumbs {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 0.85rem;
+        color: var(--color-text-muted);
+        margin-bottom: 2rem;
+      }
+
+      .breadcrumbs a {
+        color: var(--color-brand-dark);
+        text-decoration: none;
+        font-weight: 700;
+        transition: var(--transition-fast);
+      }
+
+      .breadcrumbs a:hover {
+        color: var(--color-accent);
+      }
+
+      /* Step Hero Header */
+      .step-hero {
+        background: var(--color-bg-glass);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 2.5rem;
+        margin-bottom: 3rem;
+        box-shadow: var(--shadow-glass);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .step-hero-number {
+        font-family: 'Fredoka', sans-serif;
+        font-size: 5rem;
+        font-weight: 900;
+        color: rgba(244, 173, 57, 0.12);
+        position: absolute;
+        top: -10px;
+        right: 20px;
+        line-height: 1;
+        pointer-events: none;
+      }
+
+      .step-indicator {
+        display: inline-block;
+        background-color: var(--color-brand-light);
+        color: var(--color-text-white);
+        font-weight: 800;
+        font-size: 0.75rem;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 1rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-family: 'Fredoka', sans-serif;
+      }
+
+      .step-hero h1 {
+        font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+        color: var(--color-text);
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+
+      .step-hero-desc {
+        color: var(--color-text-muted);
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+
+      /* Content Area */
+      .guide-content-wrapper {
+        background-color: var(--color-bg);
+        padding: 1rem 0;
+      }
+
+      /* Pagination Buttons */
+      .guide-pagination {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 5rem;
+        padding-top: 2rem;
+        border-top: 2px dashed var(--color-border);
+      }
+
+      .pg-btn {
+        background: var(--color-bg-glass);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        box-shadow: var(--shadow-glass);
+      }
+
+      .pg-btn:hover {
+        border-color: var(--color-brand);
+        background: var(--color-bg-secondary);
+        transform: translateY(-2px);
+      }
+
+      .pg-btn-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--color-brand-dark);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+      }
+
+      .pg-btn-title {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: var(--color-text);
+        line-height: 1.4;
+      }
+
+      .pg-btn-prev {
+        text-align: left;
+        align-items: flex-start;
+      }
+
+      .pg-btn-next {
+        text-align: right;
+        align-items: flex-end;
+        border-color: rgba(244, 173, 57, 0.3);
+        background: linear-gradient(135deg, rgba(253, 251, 247, 0.9) 0%, rgba(244, 173, 57, 0.05) 100%);
+      }
+
+      .pg-btn-next:hover {
+        border-color: var(--color-accent);
+      }
+
+      .pg-btn-next .pg-btn-label {
+        color: var(--color-accent);
+      }
+
+      @media (max-width: 600px) {
+        .guide-pagination {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .step-hero {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+
+    <div class="guide-layout">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href={`${currentBase}`}>ホーム</a>
+        <span>/</span>
+        <a href={`${currentBase}guide/`}>入門ガイド</a>
+        <span>/</span>
+        <span style="color: var(--color-text); font-weight: 700;">STEP {guide.data.stepNumber}</span>
+      </nav>
+
+      <!-- Step Hero Header -->
+      <header class="step-hero">
+        <span class="step-hero-number">{guide.data.stepNumber}</span>
+        <span class="step-indicator">STEP {guide.data.stepNumber} / 7</span>
+        <h1>{guide.data.title}</h1>
+        <p class="step-hero-desc">{guide.data.description}</p>
+      </header>
+
+      <!-- Main Rendered Markdown -->
+      <main class="guide-content-wrapper">
+        <article class="prose">
+          <Content />
+        </article>
+      </main>
+
+      <!-- Navigation Steps -->
+      <nav class="guide-pagination">
+        {prevGuide ? (
+          <a href={`${currentBase}guide/${prevGuide.id}/`} class="pg-btn pg-btn-prev">
+            <span class="pg-btn-label">⬅ PREVIOUS STEP {prevGuide.data.stepNumber}</span>
+            <span class="pg-btn-title">{prevGuide.data.title}</span>
+          </a>
+        ) : (
+          <div style="opacity: 0.3;" class="pg-btn pg-btn-prev">
+            <span class="pg-btn-label">⬅ PREVIOUS</span>
+            <span class="pg-btn-title">ここが始まりです</span>
+          </div>
+        )}
+
+        {nextGuide ? (
+          <a href={`${currentBase}guide/${nextGuide.id}/`} class="pg-btn pg-btn-next">
+            <span class="pg-btn-label">NEXT STEP {nextGuide.data.stepNumber} ➡</span>
+            <span class="pg-btn-title">{nextGuide.data.title}</span>
+          </a>
+        ) : (
+          <a href={`${currentBase}outfits/`} class="pg-btn pg-btn-next">
+            <span class="pg-btn-label">CONGRATS! FINISH 🐾</span>
+            <span class="pg-btn-title">衣装＆アイテムカタログを見る</span>
+          </a>
+        )}
+      </nav>
+    </div>
+
+    <Footer />
+  </body>
+</html>
