@@ -38,7 +38,9 @@ const today = new Date();
 
   <div class="footer-bottom">
     <div class="footer-disclaimer">
-      <p>※本サイトはファンが作成した非公式のファンクラブサイトです。アバターの仕様、販売価格等は予告なく変更される場合がありますので、最新情報は公式Boothストアをご確認ください。</p>
+      <p>※本サイトはファンが作成した非公式のファンクラブサイトです※</p>
+      <p>アバターの仕様、販売価格等は予告なく変更される場合がありますので、最新情報は公式Boothストアをご確認ください。</p>
+      <p>当サイトの掲載内容は1ファンの個人的な見解であり、公式の発表や方針を代弁するものではありません。</p>
       <p>アバター著作権：©らすちん (Rustin Works)</p>
     </div>
     <div class="footer-copyright">
@@ -63,6 +65,12 @@ const today = new Date();
     gap: 3rem;
     padding-bottom: 3rem;
     border-bottom: 1px solid rgba(244, 173, 57, 0.15);
+  }
+
+  .footer-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 2rem;
   }
 
   .footer-brand h3 {
@@ -152,6 +160,11 @@ const today = new Date();
     .footer-container {
       grid-template-columns: 1fr;
       gap: 2rem;
+    }
+    
+    .footer-links-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
     }
     
     .footer-brand {
