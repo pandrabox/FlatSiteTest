@@ -6,6 +6,24 @@ import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 const currentBase = import.meta.env.BASE_URL;
+
+const clothImages = [
+  "FCamera_20260531_131016.webp",
+  "FCamera_20260531_131144.webp",
+  "FCamera_20260531_131307.webp",
+  "FCamera_20260531_131426.webp",
+  "FCamera_20260531_131536.webp",
+  "FCamera_20260531_131619.webp",
+  "FCamera_20260531_131653.webp",
+  "FCamera_20260531_131815.webp",
+  "FCamera_20260531_132540.webp",
+  "FCamera_20260531_132638.webp",
+  "FCamera_20260531_132751.webp",
+];
+
+// クローン用のデータ抽出 (前後にシームレスに配置するため)
+const clonesStart = clothImages.slice(-3); // 最後の3枚
+const clonesEnd = clothImages.slice(0, 3); // 最初の3枚
 ---
 
 <!DOCTYPE html>
@@ -77,6 +95,7 @@ const currentBase = import.meta.env.BASE_URL;
         max-width: 600px;
         line-height: 1.6;
         text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        word-break: keep-all;
       }
 
       .hero-actions {
@@ -130,6 +149,7 @@ const currentBase = import.meta.env.BASE_URL;
         color: var(--color-text-muted);
         font-size: 1.05rem;
         margin-top: 1.5rem;
+        word-break: keep-all;
       }
 
       /* アバターバリエーション紹介 */
@@ -220,129 +240,155 @@ const currentBase = import.meta.env.BASE_URL;
         font-size: 0.9rem;
       }
 
-      /* インタラクティブお着替えシミュレータ */
-      .stage-container {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 3rem;
-        align-items: center;
-        background: var(--color-bg-glass);
-        backdrop-filter: blur(16px);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-lg);
-        padding: 3rem;
-        box-shadow: var(--shadow-medium);
-      }
-
-      .dressing-stage {
+      /* イージング付きシームレス無限カルーセル */
+      .carousel-container {
         position: relative;
-        background: radial-gradient(circle, var(--color-brand-light) 0%, var(--color-bg-secondary) 100%);
-        border-radius: var(--radius-md);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 0;
+      }
+
+      .carousel-window {
         overflow: hidden;
-        border: 2px dashed rgba(244, 173, 57, 0.3);
-        aspect-ratio: 0.95;
+        width: 100%;
+        cursor: grab;
+        border-radius: var(--radius-lg);
+        padding: 10px 0;
+        touch-action: pan-y;
       }
 
-      .tpose-avatar {
-        max-height: 85%;
-        width: auto;
-        object-fit: contain;
-        z-index: 1;
+      .carousel-window:active {
+        cursor: grabbing;
+      }
+
+      .carousel-track {
+        display: flex;
+        user-select: none;
+        will-change: transform;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .carousel-slide {
+        flex: 0 0 33.333%;
+        padding: 0 1rem;
+        box-sizing: border-box;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+        opacity: 0.45;
+        transform: scale(0.9);
+      }
+
+      .carousel-slide.active {
+        opacity: 1;
+        transform: scale(1.02);
+      }
+
+      .carousel-card {
+        background: var(--color-bg-glass);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        box-shadow: var(--shadow-glass);
         transition: var(--transition-smooth);
+        display: flex;
+        flex-direction: column;
       }
 
-      .clothes-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
+      .carousel-slide.active .carousel-card {
+        box-shadow: var(--shadow-medium);
+        border-color: var(--color-brand);
+      }
+
+      .carousel-img-container {
+        width: 100%;
+        height: 480px;
+        overflow: hidden;
+        background-color: var(--color-bg-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+      }
+
+      .carousel-img-container img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        z-index: 2;
+        object-fit: cover;
         pointer-events: none;
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        padding: 7.5% 0; /* Adjust to match the scaling of the T-Pose */
+        transition: var(--transition-smooth);
       }
 
-      .clothes-overlay.active {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+      .carousel-slide.active:hover .carousel-img-container img {
+        transform: scale(1.04);
       }
 
-      .dressing-controls {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-
-      .dressing-controls h3 {
-        font-size: 1.6rem;
+      /* カルーセルコントロール（矢印） */
+      .carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--color-bg-glass);
+        border: 1px solid var(--color-border);
         color: var(--color-brand-dark);
-      }
-
-      .dressing-controls p {
-        color: var(--color-text-muted);
-        font-size: 0.95rem;
-      }
-
-      .clothes-selector {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .selector-btn {
-        background: var(--color-bg-secondary);
-        border: 2px solid transparent;
-        padding: 1rem 1.25rem;
-        border-radius: var(--radius-md);
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: var(--shadow-glass);
+        transition: var(--transition-smooth);
+        padding: 0;
+      }
+
+      .carousel-control:hover {
+        background: var(--color-brand);
+        color: var(--color-text-white);
+        border-color: var(--color-brand);
+        box-shadow: var(--shadow-premium);
+        transform: translateY(-50%) scale(1.08);
+      }
+
+      .carousel-control.prev {
+        left: -25px;
+      }
+
+      .carousel-control.next {
+        right: -25px;
+      }
+
+      /* インジケータードット */
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 2rem;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--color-bg-secondary);
+        border: 1px solid rgba(244, 173, 57, 0.2);
         cursor: pointer;
         transition: var(--transition-smooth);
-        text-align: left;
+        padding: 0;
       }
 
-      .selector-btn:hover {
-        background: rgba(244, 173, 57, 0.1);
-        border-color: var(--color-brand-light);
+      .dot:hover {
+        background: var(--color-brand-light);
       }
 
-      .selector-btn.active {
-        background: var(--color-bg);
+      .dot.active {
+        width: 24px;
+        border-radius: 10px;
+        background: var(--color-brand);
         border-color: var(--color-brand);
-        box-shadow: var(--shadow-soft);
-      }
-
-      .selector-btn-label {
-        font-weight: 700;
-        color: var(--color-text);
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      .selector-btn-desc {
-        font-size: 0.8rem;
-        color: var(--color-text-muted);
-        font-weight: 500;
-      }
-
-      .selector-btn-indicator {
-        font-size: 1.2rem;
-        opacity: 0;
-        transition: var(--transition-fast);
-      }
-
-      .selector-btn.active .selector-btn-indicator {
-        opacity: 1;
-        transform: scale(1.1);
       }
 
       /* コミュニティショーケース */
@@ -429,10 +475,16 @@ const currentBase = import.meta.env.BASE_URL;
 
       /* レスポンシブ */
       @media (max-width: 900px) {
-        .stage-container {
-          grid-template-columns: 1fr;
-          padding: 1.5rem;
-          gap: 2rem;
+        .carousel-slide {
+          flex: 0 0 50%;
+        }
+
+        .carousel-control.prev {
+          left: 5px;
+        }
+
+        .carousel-control.next {
+          right: 5px;
         }
 
         .community-banner {
@@ -455,6 +507,20 @@ const currentBase = import.meta.env.BASE_URL;
           width: 100%;
         }
       }
+
+      @media (max-width: 600px) {
+        .carousel-slide {
+          flex: 0 0 100%;
+        }
+
+        .carousel-img-container {
+          height: 380px;
+        }
+
+        .carousel-control {
+          display: none; /* タブレット以下はスワイプ対応のため非表示 */
+        }
+      }
     </style>
   </head>
   <body>
@@ -468,10 +534,10 @@ const currentBase = import.meta.env.BASE_URL;
       <div class="hero-content">
         <span class="hero-badge">🐾 非公式フラットファンサイト</span>
         <h1>VRではじめる、<br/>もふもふケモノライフ</h1>
-        <p>VRChat向け大人気着ぐるみ体型アバター「フラット」くんの非公式ファンサイトへようこそ！アバターの魅力から、初心者向けアップロード、お着替えの方法まで徹底ガイドします。</p>
+        <p>VRChat向け着ぐるみ体型ケモノアバター「フラット」くんの<wbr>非公式ファンサイトへようこそ！<wbr>アバターの魅力から、<wbr>初心者向けアップロード、<wbr>着替えの方法まで徹底ガイドします。</p>
         <div class="hero-actions">
           <a href={`${currentBase}guide/`} class="btn btn-primary btn-lg">入門ガイドを見る 🐾</a>
-          <a href="#simulator" class="btn btn-secondary btn-lg">お着替えを試す</a>
+          <a href="#gallery" class="btn btn-secondary btn-lg">コーディネートを見る</a>
         </div>
       </div>
     </section>
@@ -480,14 +546,14 @@ const currentBase = import.meta.env.BASE_URL;
     <section class="section">
       <div class="section-header">
         <h2>アバターバリエーション</h2>
-        <p>フラットくんには個性に合わせた4つの公式バリエーションがあります。<br/>あなたの心にピンとくる、お気に入りのフラットくんを見つけましょう！</p>
+        <p>フラットくんには個性に合わせた4つの公式バリエーションがあります。<br/>あなたの心にピンとくる、お気に入りのフラットくんを見つけよう！</p>
       </div>
 
       <div class="avatar-grid">
         <!-- 1. 無印 -->
         <article class="avatar-card">
           <div class="avatar-img-wrapper">
-            <img src={`${currentBase}images/FlatNormal.webp`} alt="VRC フラット 無印バージョンアバター画像" />
+            <img src={`${currentBase}images/FlatNormal.webp`} alt="VRC ケモノ フラット 無印バージョン アバター画像" />
             <span class="avatar-badge">基本形</span>
           </div>
           <div class="avatar-info">
@@ -501,7 +567,7 @@ const currentBase = import.meta.env.BASE_URL;
         <!-- 2. 2nd -->
         <article class="avatar-card">
           <div class="avatar-img-wrapper">
-            <img src={`${currentBase}images/Flat2nd.webp`} alt="VRC フラット 2nd Anniversaryパーカーアバター画像" />
+            <img src={`${currentBase}images/Flat2nd.webp`} alt="VRC ケモノ フラット 2nd Anniversary パーカーアバター画像" />
             <span class="avatar-badge">カジュアル</span>
           </div>
           <div class="avatar-info">
@@ -515,78 +581,119 @@ const currentBase = import.meta.env.BASE_URL;
         <!-- 3. 4th -->
         <article class="avatar-card">
           <div class="avatar-img-wrapper">
-            <img src={`${currentBase}images/Flat4th.webp`} alt="VRC フラット 4th Anniversaryサイバーアバター画像" />
-            <span class="avatar-badge">管理人イチオシ！</span>
+            <img src={`${currentBase}images/Flat4th.webp`} alt="VRC ケモノ フラット 4th Anniversary アバター画像" />
+            <span class="avatar-badge">公式推奨</span>
           </div>
           <div class="avatar-info">
             <div class="avatar-rank">⭐⭐⭐⭐⭐</div>
             <h3>Flat 4th Anniv.</h3>
             <span class="avatar-price">¥3,980</span>
-            <p class="avatar-desc">4周年を記念したクールなサイバーパンク風ネオン衣装。最新のギミック規格や改変しやすさに最適化された一押しアバター。</p>
+            <p class="avatar-desc">4周年を記念したクールなサイバーパンク風ネオン衣装。沢山の表情、耳の動きに対応した公式推奨アバター。</p>
           </div>
         </article>
 
         <!-- 4. IF -->
         <article class="avatar-card">
           <div class="avatar-img-wrapper">
-            <img src={`${currentBase}images/FlatIF.webp`} alt="VRC フラット If Verワイルドアバター画像" />
+            <img src={`${currentBase}images/FlatIF.webp`} alt="VRC ケモノ フラット If Ver アバター画像" />
             <span class="avatar-badge">個性派</span>
           </div>
           <div class="avatar-info">
             <div class="avatar-rank">⭐⭐⭐⭐★</div>
             <h3>Flat If Ver</h3>
             <span class="avatar-price">¥3,980</span>
-            <p class="avatar-desc">「もしもフラットくんがやんちゃだったら？」のIFアバター。キバののぞく表情やパンキッシュなストリートジャケットが超個性的！</p>
+            <p class="avatar-desc">「もしもフラットくんがやんちゃだったら？」のIFアバター。いつもと違うストリートジャケットが超個性的！</p>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- 3. インタラクティブお着替えシミュレータセクション -->
-    <section class="section" id="simulator">
+    <!-- 3. コーディネートギャラリーカルーセルセクション -->
+    <section class="section" id="gallery">
       <div class="section-header">
-        <h2>あなただけのフラットくんに</h2>
-        <p>公式衣装からファンメイドの可愛い服まで。アバターはお着替え（改変）することで無限の個性を放ちます。ゲーム内のお着替えイメージを今すぐ体験！</p>
+        <h2>もふもふコーディネート</h2>
+        <p>いろいろな衣装を身にまとったフラットくんたち！<br/>衣装や改変（お着替え）を変えるだけで、こんなに多様で可愛い個性を放ちます。</p>
       </div>
 
-      <div class="stage-container">
-        <!-- Stage Frame (Left) -->
-        <div class="dressing-stage">
-          <!-- Base T-pose Flat -->
-          <img class="tpose-avatar" id="tposeAvatar" src={`${currentBase}images/FlatTPose.webp`} alt="お着替えシミュレータ用 Tポーズのフラットくんベースアバター" />
-          
-          <!-- Clothes Overlay (Toggled via JS) -->
-          <img class="clothes-overlay" id="clothesOverlay1" src={`${currentBase}images/Clothes1.webp`} alt="フラットくん用カジュアルコートオーバーレイ" />
+      <div class="carousel-container">
+        <!-- カルーセル窓枠 -->
+        <div class="carousel-window" id="carouselWindow">
+          <div class="carousel-track" id="carouselTrack">
+            
+            <!-- 【1. 開始側の無限連結用クローン（最後の3枚）】 -->
+            {clonesStart.map((imgName, index) => {
+              const originalIndex = clothImages.length - 3 + index;
+              return (
+                <div class="carousel-slide clone-slide" data-index={originalIndex}>
+                  <div class="carousel-card">
+                    <div class="carousel-img-container">
+                      <img 
+                        src={`${currentBase}images/ClothSample/${imgName}`} 
+                        alt="シームレス無限スライド用のクローン画像" 
+                        loading="lazy" 
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            <!-- 【2. 本番の11枚のスライド】 -->
+            {clothImages.map((imgName, index) => (
+              <div class="carousel-slide real-slide" data-index={index}>
+                <div class="carousel-card">
+                  <div class="carousel-img-container">
+                    <img 
+                      src={`${currentBase}images/ClothSample/${imgName}`} 
+                      alt={`様々な衣装を着たフラットくんのコーディネート写真 #${index + 1}`} 
+                      loading="lazy" 
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <!-- 【3. 終了側の無限連結用クローン（最初の3枚）】 -->
+            {clonesEnd.map((imgName, index) => (
+              <div class="carousel-slide clone-slide" data-index={index}>
+                <div class="carousel-card">
+                  <div class="carousel-img-container">
+                    <img 
+                      src={`${currentBase}images/ClothSample/${imgName}`} 
+                      alt="シームレス無限スライド用のクローン画像" 
+                      loading="lazy" 
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          </div>
         </div>
 
-        <!-- Controls Frame (Right) -->
-        <div class="dressing-controls">
-          <h3>お着替えクローゼット 👗</h3>
-          <p>ボタンをクリックすると、フラットくんに衣装を着せたり、脱がせたりすることができます。アウターのフィット感をチェック！</p>
-          
-          <div class="clothes-selector">
-            <button class="selector-btn active" id="btnBase">
-              <span class="selector-btn-label">
-                <span>素体モード (T-Pose)</span>
-                <span class="selector-btn-desc">お着替え前のすっきりとした状態</span>
-              </span>
-              <span class="selector-btn-indicator">👀</span>
-            </button>
+        <!-- 左右コントロールボタン -->
+        <button class="carousel-control prev" id="prevBtn" aria-label="前のスライド">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="carousel-control next" id="nextBtn" aria-label="次のスライド">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
 
-            <button class="selector-btn" id="btnClothes1">
-              <span class="selector-btn-label">
-                <span>モフモフカジュアルアウター 🧥</span>
-                <span class="selector-btn-desc">オーバーサイズのファンメイド秋冬コート</span>
-              </span>
-              <span class="selector-btn-indicator">✨</span>
-            </button>
-          </div>
-
-          <div style="margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
-            <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 1rem;">※Modular Avatarという無料の拡張ツールを使えば、この着せ替えがUnity上でドラッグ＆ドロップだけで完全再現できます。</p>
-            <a href={`${currentBase}outfits/`} class="btn btn-secondary" style="width: 100%;">衣装＆カスタムアセットをもっと見る</a>
-          </div>
+        <!-- インジケータードット -->
+        <div class="carousel-dots" id="carouselDots">
+          {clothImages.map((_, index) => (
+            <button class="dot" data-index={index} aria-label={`スライド ${index + 1} へ移動`}></button>
+          ))}
         </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 3rem;">
+        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1.5rem;">※これらのお着替えはすべて、UnityやModular Avatarを使うことで、簡単にアバターへインポートできます。</p>
+        <a href={`${currentBase}outfits/`} class="btn btn-secondary">お着替えアセットをもっと見る</a>
       </div>
     </section>
 
@@ -618,29 +725,277 @@ const currentBase = import.meta.env.BASE_URL;
     <Footer />
 
     <script>
-      // Interactive Closet Logic
+      // 1. Interactive Closet Logic
       const btnBase = document.getElementById('btnBase');
       const btnClothes1 = document.getElementById('btnClothes1');
       const clothesOverlay1 = document.getElementById('clothesOverlay1');
 
       if (btnBase && btnClothes1 && clothesOverlay1) {
         btnBase.addEventListener('click', () => {
-          // Remove active class from buttons
           btnBase.classList.add('active');
           btnClothes1.classList.remove('active');
-          
-          // Hide overlay
           clothesOverlay1.classList.remove('active');
         });
 
         btnClothes1.addEventListener('click', () => {
-          // Toggle active class on buttons
           btnClothes1.classList.add('active');
           btnBase.classList.remove('active');
-
-          // Show overlay with transition
           clothesOverlay1.classList.add('active');
         });
+      }
+
+      // 2. 衣装イージング表示 カルーセルロジック
+      const tWindowFrame = document.getElementById('carouselWindow');
+      const tTrack = document.getElementById('carouselTrack');
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dots = document.querySelectorAll('.dot');
+      const tPrevBtn = document.getElementById('prevBtn');
+      const tNextBtn = document.getElementById('nextBtn');
+
+      if (tWindowFrame && tTrack && slides.length > 0) {
+        const totalSlides = slides.length;
+        const totalRealSlides = totalSlides - 6; // 前後3枚ずつのクローンを除く
+        let currentIndex = 3; // 最初の実体スライド (インデックス3) から開始
+        let autoplayTimer = null;
+        let isHovered = false;
+
+        function startAutoplay() {
+          stopAutoplay();
+          autoplayTimer = setInterval(() => {
+            if (!isHovered && !isDragging) {
+              currentIndex++;
+              updateSlider(true);
+            }
+          }, 3500); // 3.5秒ごとに自動スライド
+        }
+
+        function stopAutoplay() {
+          if (autoplayTimer) {
+            clearInterval(autoplayTimer);
+            autoplayTimer = null;
+          }
+        }
+
+        // ホバー監視
+        tWindowFrame.addEventListener('mouseenter', () => {
+          isHovered = true;
+          stopAutoplay();
+        });
+
+        tWindowFrame.addEventListener('mouseleave', () => {
+          isHovered = false;
+          startAutoplay();
+        });
+
+        // タッチ端末でのスクロール/タップでの一時停止対応
+        tWindowFrame.addEventListener('touchstart', () => {
+          isHovered = true;
+          stopAutoplay();
+        }, { passive: true });
+
+        tWindowFrame.addEventListener('touchend', () => {
+          isHovered = false;
+          startAutoplay();
+        }, { passive: true });
+
+
+        // 軽量・高精細ドラッグ＆スワイプ制御 (Pointer Events API)
+        let startX = 0;
+        let isDragging = false;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+
+        tWindowFrame.addEventListener('pointerdown', (e) => {
+          startX = e.clientX;
+          isDragging = true;
+          stopAutoplay();
+          tTrack.style.transition = 'none'; // ドラッグ中はイージングアニメーションを切る
+          slides.forEach(slide => {
+            slide.style.transition = 'none'; // ドラッグ中の表情スケール変化を瞬時に追従
+          });
+
+          const isMobile = window.innerWidth <= 600;
+          const isTablet = window.innerWidth <= 900 && window.innerWidth > 600;
+          let cardWidth = 33.333;
+          let centerOffset = 33.333;
+          if (isMobile) { cardWidth = 100; centerOffset = 0; }
+          else if (isTablet) { cardWidth = 50; centerOffset = 25; }
+
+          prevTranslate = -(currentIndex * cardWidth) + centerOffset;
+          tWindowFrame.setPointerCapture(e.pointerId);
+        });
+
+        tWindowFrame.addEventListener('pointermove', (e) => {
+          if (!isDragging) return;
+          const currentX = e.clientX;
+          const diffX = currentX - startX;
+
+          // ピクセル単位の移動量を、トラックの親コンテナに対するパーセンテージに変換
+          const containerWidth = tWindowFrame.clientWidth;
+          const diffPercent = (diffX / containerWidth) * 100;
+
+          currentTranslate = prevTranslate + diffPercent;
+          tTrack.style.transform = `translateX(${currentTranslate}%)`;
+        });
+
+        tWindowFrame.addEventListener('pointerup', (e) => {
+          if (!isDragging) return;
+          isDragging = false;
+          tTrack.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'; // イージングを復元
+          slides.forEach(slide => {
+            slide.style.transition = ''; // CSSの定義に戻す
+          });
+
+          const currentX = e.clientX;
+          const diffX = currentX - startX;
+          const threshold = 40; // 40px以上のドラッグで隣のスライドへスナップ移動
+
+          if (diffX < -threshold) {
+            currentIndex++;
+          } else if (diffX > threshold) {
+            currentIndex--;
+          }
+
+          updateSlider(true);
+          tWindowFrame.releasePointerCapture(e.pointerId);
+          startAutoplay();
+        });
+
+        tWindowFrame.addEventListener('pointercancel', (e) => {
+          if (!isDragging) return;
+          isDragging = false;
+          tTrack.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+          slides.forEach(slide => {
+            slide.style.transition = ''; // CSSの定義に戻す
+          });
+          updateSlider(true);
+          tWindowFrame.releasePointerCapture(e.pointerId);
+          startAutoplay();
+        });
+
+
+        function updateSlider(withTransition = true) {
+          const isMobile = window.innerWidth <= 600;
+          const isTablet = window.innerWidth <= 900 && window.innerWidth > 600;
+
+          let cardWidth = 33.333;
+          let centerOffset = 33.333; // 1枚分の幅をずらしてセンターに
+
+          if (isMobile) {
+            cardWidth = 100;
+            centerOffset = 0;
+          } else if (isTablet) {
+            cardWidth = 50;
+            centerOffset = 25; // 半個分の幅をずらしてセンターに
+          }
+
+          if (withTransition) {
+            tTrack.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+            slides.forEach(slide => {
+              slide.style.transition = ''; // CSSの定義に戻す
+            });
+          } else {
+            tTrack.style.transition = 'none';
+            slides.forEach(slide => {
+              slide.style.transition = 'none';
+            });
+          }
+
+          // イージング付きの移動量計算
+          const transformValue = -(currentIndex * cardWidth) + centerOffset;
+          tTrack.style.transform = `translateX(${transformValue}%)`;
+
+          // アクティブクラスの更新 (センターのカードを拡大＆高透過率に)
+          slides.forEach((slide, index) => {
+            if (index === currentIndex) {
+              slide.classList.add('active');
+            } else {
+              slide.classList.remove('active');
+            }
+          });
+
+          // 無限ループ用にインジケータードットを本番の11個に補正マッピング
+          let realIndex = (currentIndex - 3) % totalRealSlides;
+          if (realIndex < 0) {
+            realIndex += totalRealSlides;
+          }
+
+          dots.forEach((dot, index) => {
+            if (index === realIndex) {
+              dot.classList.add('active');
+            } else {
+              dot.classList.remove('active');
+            }
+          });
+        }
+
+        // コントロールボタンイベント
+        if (tPrevBtn && tNextBtn) {
+          tPrevBtn.addEventListener('click', () => {
+            currentIndex--;
+            updateSlider(true);
+          });
+
+          tNextBtn.addEventListener('click', () => {
+            currentIndex++;
+            updateSlider(true);
+          });
+        }
+
+        // ドットのクリック (対応する本物のインデックス3〜13へジャンプ)
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            currentIndex = index + 3;
+            updateSlider(true);
+          });
+        });
+
+        // スライドのクリックでの直接フォーカス
+        slides.forEach((slide, index) => {
+          slide.addEventListener('click', () => {
+            currentIndex = index;
+            updateSlider(true);
+          });
+        });
+
+        // 【シームレス無限ループのためのトランジション終了時テレポート制御】
+        tTrack.addEventListener('transitionend', (e) => {
+          if (e.propertyName !== 'transform') return;
+
+          // 右端のクローン（index 14, 15, 16）を超えたら本物のスタート（index 3）へ瞬時テレポート
+          if (currentIndex >= totalSlides - 3) {
+            currentIndex = 3;
+            updateSlider(false);
+            
+            // Force reflow and re-enable transition in next frames to avoid jump animation
+            void tTrack.offsetHeight;
+            requestAnimationFrame(() => {
+              tTrack.style.transition = '';
+              slides.forEach(slide => {
+                slide.style.transition = '';
+              });
+            });
+          }
+          // 左端のクローン（index 0, 1, 2）を下回ったら本物のエンド（index 13）へ瞬時テレポート
+          else if (currentIndex < 3) {
+            currentIndex = totalSlides - 4; // index 13
+            updateSlider(false);
+            
+            // Force reflow and re-enable transition in next frames to avoid jump animation
+            void tTrack.offsetHeight;
+            requestAnimationFrame(() => {
+              tTrack.style.transition = '';
+              slides.forEach(slide => {
+                slide.style.transition = '';
+              });
+            });
+          }
+        });
+
+        // 初期化とリサイズ対応
+        window.addEventListener('resize', () => updateSlider(true));
+        updateSlider();
+        startAutoplay(); // オートプレイの起動
       }
     </script>
   </body>
