@@ -56,7 +56,7 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
           <span class="option-icon">🐾</span>
           <span class="option-badge no">いいえ / 他のケモノも気になる…</span>
         </div>
-        <p class="option-text">➔ 実はフラットくんの素体をベースにした魅力的な派生アバター<strong>「フラット族」</strong>という選択肢もあります！ページ下部の「🐾 個性きわだつ派生アバター『フラット族』」をチェックしてみてください！</p>
+        <p class="option-text">➔ 実はフラットくんの素体をベースにした魅力的な派生アバター<strong>「フラット族」</strong>という選択肢もあります！ページ下部の「個性きわだつ派生アバター『フラット族』」をチェックしてみてください！</p>
       </div>
     </div>
   </div>
@@ -79,7 +79,7 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
           <span class="option-badge decision">If（イフ）バージョンが好き！</span>
         </div>
         <div class="option-decision-box">
-          <p class="decision-title">➔ 【If Ver】で決定！ 🎉</p>
+          <p class="decision-title">➔ 【If Ver】で決定！</p>
           <p class="option-text desc">Ifバージョンは、お顔のパーツ配置や目つきが他の3種類と異なり、少しやんちゃでワイルドな独自フェイスになっています。この顔つきにビビッときたら、迷わずIfを選びましょう！</p>
         </div>
       </div>
@@ -111,7 +111,7 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
           <span class="option-badge decision">いる！</span>
         </div>
         <div class="option-decision-box">
-          <p class="decision-title">➔ その公式服を着ているアバターで決定！ 👕</p>
+          <p class="decision-title">➔ その公式服を着ているアバターで決定！</p>
           <ul class="decision-list">
             <li><strong>2nd Anniversary</strong>：カジュアルで可愛い専用ジップパーカーを着用。</li>
             <li><strong>4th Anniversary</strong>：近未来的でスタイリッシュなテックウェアを着用。</li>
@@ -147,7 +147,7 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
           <span class="option-badge decision">表情豊かなコミュニケーションを楽しみたい！</span>
         </div>
         <div class="option-decision-box">
-          <p class="decision-title">➔ 【4th Anniversary】がオススメ！ 🌟</p>
+          <p class="decision-title">➔ 【4th Anniversary】がオススメ！</p>
           <p class="option-text desc">最新仕様で作られており、顔の可動域を示す「BS値」が全バージョンの中で最高スペックです！表情豊かな感情表現が楽しめます。</p>
         </div>
       </div>
@@ -157,7 +157,7 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
           <span class="option-badge decision">初期費用（値段）を抑えて遊びたい！</span>
         </div>
         <div class="option-decision-box">
-          <p class="decision-title">➔ 【無印バージョン】がオススメ！ 💸</p>
+          <p class="decision-title">➔ 【無印バージョン】がオススメ！</p>
           <p class="option-text desc">¥3,000と最もリーズナブル！服は着ていませんが、BOOTH等で配布・販売されている数多くの衣装を着せ替えて楽しむことができます！</p>
         </div>
       </div>
@@ -168,7 +168,7 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
 
 ---
 
-### 📊 各バージョンのスペック＆特徴比較
+### 各バージョンのスペック＆特徴比較
 
 購入前に知っておきたい、それぞれのモデルの具体的なスペック差は以下の通りです。
 
@@ -180,13 +180,13 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
 | **IF** | 56 | ストリートウェア |
 
 > [!NOTE]
-> **💡 BS値（ブレンドシェイプ値）とは？**
+> **BS値（ブレンドシェイプ値）とは？**
 > 「**顔がどれくらい自由に動かせるか（ブレンドシェイプの数）**」を示す指標です。
 > この値が高いほど、表情がより豊かになり、まばたきや笑顔、口の動きをより繊細に表現できます。特に **If** や **4th** は表情豊かなコミュニケーションを楽しむことができます！
 
 ---
 
-### 🐾 個性きわだつ派生アバター「フラット族」
+### 個性きわだつ派生アバター「フラット族」
 
 <img class="transparent-img" src="/FlatSiteTest/images/Flats.webp" alt="フラットシリーズ4体集合イメージ" style="width: 100%; display: block; margin: 2rem 0; box-shadow: none !important;" />
 
