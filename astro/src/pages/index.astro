@@ -278,6 +278,11 @@ const clonesEnd = clothImages.slice(0, 3); // 最初の3枚
         transform: scale(0.9);
       }
 
+      .carousel-slide.no-transition,
+      .carousel-slide.no-transition .carousel-card {
+        transition: none !important;
+      }
+
       .carousel-slide.active {
         opacity: 1;
         transform: scale(1.02);
@@ -690,11 +695,6 @@ const clonesEnd = clothImages.slice(0, 3); // 最初の3枚
           ))}
         </div>
       </div>
-      
-      <div style="text-align: center; margin-top: 3rem;">
-        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1.5rem;">※これらのお着替えはすべて、UnityやModular Avatarを使うことで、簡単にアバターへインポートできます。</p>
-        <a href={`${currentBase}outfits/`} class="btn btn-secondary">お着替えアセットをもっと見る</a>
-      </div>
     </section>
 
     <!-- 4. コミュニティセクション -->
@@ -962,34 +962,53 @@ const clonesEnd = clothImages.slice(0, 3); // 最初の3枚
         tTrack.addEventListener('transitionend', (e) => {
           if (e.propertyName !== 'transform') return;
 
-          // 右端のクローン（index 14, 15, 16）を超えたら本物のスタート（index 3）へ瞬時テレポート
+          const isMobile = window.innerWidth <= 600;
+          const isTablet = window.innerWidth <= 900 && window.innerWidth > 600;
+          let cardWidth = 33.333;
+          let centerOffset = 33.333;
+
+          if (isMobile) {
+            cardWidth = 100;
+            centerOffset = 0;
+          } else if (isTablet) {
+            cardWidth = 50;
+            centerOffset = 25;
+          }
+
+          // 右端のクローンを超えたら本物のスタートへ瞬時テレポート
           if (currentIndex >= totalSlides - 3) {
             currentIndex = 3;
-            updateSlider(false);
-            
-            // Force reflow and re-enable transition in next frames to avoid jump animation
-            void tTrack.offsetHeight;
-            requestAnimationFrame(() => {
-              tTrack.style.transition = '';
-              slides.forEach(slide => {
-                slide.style.transition = '';
-              });
-            });
           }
-          // 左端のクローン（index 0, 1, 2）を下回ったら本物のエンド（index 13）へ瞬時テレポート
+          // 左端のクローンを下回ったら本物のエンドへ瞬時テレポート
           else if (currentIndex < 3) {
-            currentIndex = totalSlides - 4; // index 13
-            updateSlider(false);
-            
-            // Force reflow and re-enable transition in next frames to avoid jump animation
-            void tTrack.offsetHeight;
-            requestAnimationFrame(() => {
-              tTrack.style.transition = '';
-              slides.forEach(slide => {
-                slide.style.transition = '';
-              });
-            });
+            currentIndex = totalSlides - 4;
           }
+          else {
+            return; // テレポートしない場合は早期リターン
+          }
+
+          // テレポート: スライドのトランジションを一時的に無効化してカードが縮むのを防ぐ
+          slides.forEach(slide => slide.classList.add('no-transition'));
+          void tTrack.offsetHeight; // フォースリフローでトランジション無効化を確定
+
+          // トランジションを無効化してトラックを移動
+          tTrack.style.transition = 'none';
+          tTrack.style.transform = `translateX(${-currentIndex * cardWidth + centerOffset}%)`;
+          
+          // アクティブクラスとドットを更新
+          slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentIndex);
+          });
+
+          let realIndex = (currentIndex - 3) % totalRealSlides;
+          if (realIndex < 0) realIndex += totalRealSlides;
+          dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === realIndex);
+          });
+
+          // フォースリフローで変更を確定後、トランジションを復元
+          void tTrack.offsetHeight;
+          slides.forEach(slide => slide.classList.remove('no-transition'));
         });
 
         // 初期化とリサイズ対応
