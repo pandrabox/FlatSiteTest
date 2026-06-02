@@ -39,7 +39,7 @@ keywords: ["VRC アバター アップロード ALCOM", "VRChat アバター ア
 
 ### 📂 Step 2. ツールとアバターのパッケージを導入する
 
-1. 事前準備でダウンロードしておいた **`MA_Liltoon_Av3.unitypackage`** をダブルクリックします。
+1. 事前準備でダウンロードしておいた **[MA_Liltoon_Av3.unitypackage](/FlatSiteTest/downloads/MA_Liltoon_Av3.unitypackage)** をダブルクリックします。
    Unity画面上でインポート用のウインドウが開くので、右下の「**Import**」ボタンを押します。
 
    ![Importボタンを押す](/FlatSiteTest/images/guides/upload/5.webp)
@@ -48,11 +48,11 @@ keywords: ["VRC アバター アップロード ALCOM", "VRChat アバター ア
 
    ![Installを押す](/FlatSiteTest/images/guides/upload/6.webp)
 
-3. ツールパッケージの導入が完了してインポートウインドウが消えたら、次はBoothで購入した「フラットくん」のパッケージファイル（例：`flat_v4.0.unitypackage`）をダブルクリックし、同様に「**Import**」します。
+3. ツールパッケージの導入が完了してインポートウインドウが消えたら、次はBoothで購入した「フラットくん」のパッケージファイル（例：`flat_v*.unitypackage`）をダブルクリックし、同様に「**Import**」します。
 
    ![フラットくんのパッケージをインポート](/FlatSiteTest/images/guides/upload/7.webp)
 
-4. インポートが完了すると、Unity下部の「Project」ウインドウの `Assets` フォルダ配下に「フラットくん」のフォルダ（例: `flat`）が生成されるので、ダブルクリックで開きます。
+4. インポートが完了すると、Unity下部の「Project」ウインドウの `Assets` フォルダ配下に「フラット」のフォルダ（例: `flat`）が生成されるので、ダブルクリックで開きます。
 
    ![Project内のフラットくんフォルダ](/FlatSiteTest/images/guides/upload/8.webp)
 
@@ -80,7 +80,7 @@ keywords: ["VRC アバター アップロード ALCOM", "VRChat アバター ア
 
    ![ShaderをlilToonに変更](/FlatSiteTest/images/guides/upload/13.webp)
 
-5. ピンク色の丸が、肌色や模様のある正常な見た目に変わったことを確認します。確認できたら、下部の「Project」ウインドウで `flat` フォルダに戻ります。
+5. ピンク色の丸が、ベージュ色や模様のある正常な見た目に変わったことを確認します。確認できたら、下部の「Project」ウインドウで `flat` フォルダに戻ります。
 
    ![マテリアルの修正完了](/FlatSiteTest/images/guides/upload/14.webp)
 
@@ -116,11 +116,11 @@ keywords: ["VRC アバター アップロード ALCOM", "VRChat アバター ア
 
    ![名前の入力](/FlatSiteTest/images/guides/upload/20.webp)
 
-5. 「**Capture In Scene**」ボタンを押し、アバターのサムネイル用の画像を設定します。ボタンを押した後に表示されるプレビュー画面で「**Capture**」を押せば設定完了です（位置が少しずれていても、とりあえずそのままで大丈夫です）。
+5. 「**Capture In Scene**」ボタンを押し、アバターのサムネイル用の画像を設定します。ボタンを押した後に表示されるプレビュー画面で「**Capture**」を押します（キャラクターがすごく小さいですが、とりあえずそのままで大丈夫です）。
 
    ![サムネイル画像のキャプチャ](/FlatSiteTest/images/guides/upload/21.webp)
 
-6. 「**Build Type**」の項目が「**Build & Publish Your Avatar Online**」になっていることを確認します。
+6. 「**Build Type**」を「**Build & Publish Your Avatar Online**」に設定します。
 
    ![Build Typeの確認](/FlatSiteTest/images/guides/upload/22.webp)
 
@@ -148,7 +148,7 @@ keywords: ["VRC アバター アップロード ALCOM", "VRChat アバター ア
 
    ![Launch Padを開く](/FlatSiteTest/images/guides/upload/27.webp)
 
-2. 左メニューの「**Avatars**」を選択し、一覧から「**Uploaded（アップロードしたもの）**」をクリックします。先ほどアップロードしたアバターが表示されるので、クリックして「**Change Avatar（アバターを変更する）**」または「適用」を押します。
+2. 「**アバター**」ボタンを押し、左の一覧から「**アップロードしたもの**」をクリックします。先ほどアップロードしたアバターが表示されるので、クリックして「**適用**」を押します。
 
    ![アバターの選択](/FlatSiteTest/images/guides/upload/29.webp)
 
@@ -158,7 +158,7 @@ keywords: ["VRC アバター アップロード ALCOM", "VRChat アバター ア
 
 ---
 
-### 🛠 こまったときは
+### こまったときは
 
 Unityの操作中に、ウインドウを誤って閉じてしまったり、配置が崩れて画面がおかしくなってしまったら：
 
@@ -173,6 +173,6 @@ Unityの操作中に、ウインドウを誤って閉じてしまったり、配
 ---
 
 これでフラットくんのアップロード手順はすべて完了です！
-次のステップでは、フラットくんをさらにおしゃれにする「お着替え（衣装変更）」に挑戦します。
+次のステップでは、フラットくんをさらにおしゃれにする「着替え（衣装変更）」に挑戦します。
 
 [次のステップへ：アバターを着せ替えする](/FlatSiteTest/guide/7-dress-up/)
