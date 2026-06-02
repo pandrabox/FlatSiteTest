@@ -196,6 +196,7 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
 
 #### **コモド (Comodo)**
 *   **特徴**：「気楽に」という言葉が語源のレッサーパンダ。ジャケットがかっこいい！
+*   👉 [VRChatグループ コモドの音楽隊](https://vrchat.com/home/group/grp_50ccc0ea-ac7c-458e-ae03-01ab84749ab4)
 *   👉 [BOOTHでコモドを見る](https://booth.pm/ja/items/4046145)
 
 #### **フェル (Fel)**
@@ -203,7 +204,8 @@ keywords: ["VRC ケモノ", "アバター", "フラット族"]
 *   👉 [BOOTHでフェルを見る](https://booth.pm/ja/items/4656076)
 
 #### **ヘオン (Heon)**
-*   **特徴**：のほほんとした猫。とってもユーザーが多いです。
+*   **特徴**：のほほんとした猫。完全専用衣装もある愛されキャラクター。
+*   👉 [VRChatグループ ヘオンのたまり場](https://vrchat.com/home/group/grp_5f1e6c1d-7584-47ff-ab0d-1305fb30af43)
 *   👉 [BOOTHでヘオンを見る](https://booth.pm/ja/items/4849773)
 
 #### **キューフ (Kyufu)**
