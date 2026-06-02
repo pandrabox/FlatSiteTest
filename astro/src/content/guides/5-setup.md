@@ -130,6 +130,11 @@ ALCOMに戻ります。
 
 以降、数ステップの初期設定が続きます。画面の指示に従って進めてください。
 
+- **プロジェクト保存先** … 通常そのままでいいですが、**日本語が入っている場合、他のフォルダへ変更したほうがいい**です
+
+![Unity Hubのパスが認識された状態](/FlatSiteTest/images/guides/alcom/17.5.webp)
+
+
 - **システム設定** … **`ALCOMとvcc:URLを紐付ける`** にチェックを入れてください。
 
 ![システム設定 - vcc:URL紐付け](/FlatSiteTest/images/guides/alcom/18.webp)
