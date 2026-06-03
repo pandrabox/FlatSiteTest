@@ -6,8 +6,8 @@
 *.sln.docstates
 
 # ASTRO フォルダ以外はコミットしない
-# tool フォルダ（ローカル用スクリプト）
-tool/
+# tool フォルダ（submodule として管理）
+# tool/ は submodule として許可
 
 # dev フォルダ（ローカル用データ）
 dev/
