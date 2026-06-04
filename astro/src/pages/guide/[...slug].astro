@@ -209,7 +209,7 @@ const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentI
       <!-- Step Hero Header -->
       <header class="step-hero">
         <span class="step-hero-number">{guide.data.stepNumber}</span>
-        <span class="step-indicator">STEP {guide.data.stepNumber} / 7</span>
+        <span class="step-indicator">STEP {guide.data.stepNumber} / {sortedGuides.length}</span>
         <h1>{guide.data.title}</h1>
         <p class="step-hero-desc">{guide.data.description}</p>
       </header>
