@@ -63,7 +63,7 @@ const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentI
 
       /* Step Hero Header */
       .step-hero {
-        background: var(--color-bg-glass);
+        background: linear-gradient(135deg, hsl(37, 95%, 72%) 0%, hsl(30, 85%, 45%) 100%);
         border: 1px solid var(--color-border);
         border-radius: var(--radius-lg);
         padding: 2.5rem;
@@ -71,6 +71,22 @@ const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentI
         box-shadow: var(--shadow-glass);
         position: relative;
         overflow: hidden;
+      }
+
+      .step-hero h1 {
+        color: var(--color-text-white);
+        text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+
+      .step-hero-desc {
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+
+      .step-indicator {
+        background-color: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
       }
 
       .step-hero-number {
@@ -87,7 +103,9 @@ const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentI
 
       .step-indicator {
         display: inline-block;
-        background-color: var(--color-brand-light);
+        background-color: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         color: var(--color-text-white);
         font-weight: 800;
         font-size: 0.75rem;
@@ -101,15 +119,42 @@ const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentI
 
       .step-hero h1 {
         font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-        color: var(--color-text);
+        color: var(--color-text-white);
         margin-bottom: 1rem;
         line-height: 1.3;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.1);
       }
 
       .step-hero-desc {
-        color: var(--color-text-muted);
+        color: rgba(255, 255, 255, 0.9);
         font-size: 1.05rem;
         line-height: 1.6;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+
+      .step-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 0.75rem;
+        line-height: 1.2;
+      }
+
+      .keyword-tag {
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.75rem;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        transition: var(--transition-fast);
+      }
+
+      .keyword-tag:hover {
+        color: rgba(255, 255, 255, 1);
+      }
+
+      .keyword-tag:not(:last-child)::after {
+        content: "•";
+        margin-left: 6px;
+        color: rgba(255, 255, 255, 0.45);
       }
 
       /* Content Area */
@@ -212,6 +257,13 @@ const nextGuide = currentIndex < sortedGuides.length - 1 ? sortedGuides[currentI
         <span class="step-indicator">STEP {guide.data.stepNumber} / {sortedGuides.length}</span>
         <h1>{guide.data.title}</h1>
         <p class="step-hero-desc">{guide.data.description}</p>
+        {guide.data.keywords && (
+          <div class="step-meta">
+            {guide.data.keywords.map((kw) => (
+              <span class="keyword-tag">#{kw}</span>
+            ))}
+          </div>
+        )}
       </header>
 
       <!-- Main Rendered Markdown -->
