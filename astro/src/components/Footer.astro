@@ -1,12 +1,15 @@
 ---
 // src/components/Footer.astro
 const today = new Date();
+const currentBase = import.meta.env.BASE_URL + '/';
 ---
 
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
-      <h3 class="brand-font">🐾 フラットファンクラブ</h3>
+      <a href={`${currentBase}`} class="footer-logo-link">
+        <img src={`${currentBase}images/logo.webp`} alt="フラットファンクラブ ロゴ" class="footer-logo" />
+      </a>
       <p class="footer-desc">
         VRChat向け3Dケモノアバター「フラット」くんの魅力を伝える、非公式のファンサイトです。
       </p>
@@ -74,11 +77,23 @@ const today = new Date();
     gap: 2rem;
   }
 
-  .footer-brand h3 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    color: var(--color-brand-dark);
+  .footer-logo-link {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-logo {
+    max-height: 100px;
+    width: auto;
+    object-fit: contain;
+    transition: var(--transition-smooth);
+  }
+
+  .footer-logo-link:hover .footer-logo {
+    transform: scale(1.03);
   }
 
   .footer-desc {
@@ -170,6 +185,14 @@ const today = new Date();
     
     .footer-brand {
       text-align: center;
+    }
+
+    .footer-logo-link {
+      margin: 0 auto 0.5rem auto;
+    }
+
+    .footer-logo {
+      max-height: 72px;
     }
     
     .footer-desc {
